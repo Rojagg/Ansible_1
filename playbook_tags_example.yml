@@ -1,0 +1,42 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:      #To są taski które są wykonywane przed
+
+  - name: update repository index
+    tags: always
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+- hosts: serwer1
+  become: true
+  tasks: 
+
+  - name: install apache2 package
+    tags: apache2, ubuntu, web
+    apt:
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: add php support for apache
+    tags: apache2, ubuntu, web
+    apt:
+      name: libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+
+- hosts: serwer2
+  become: true
+  tasks:
+
+  - name: install db package
+    tags: apache2, db, mariadb
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
