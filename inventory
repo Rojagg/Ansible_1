@@ -1,1 +1,6 @@
-192.168.0.20 apache_package=apache2 php_package=libapache2-mod-php
+[serwer1]
+192.168.0.20
+
+[serwer2]
+192.168.0.21
+

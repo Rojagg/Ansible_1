@@ -2,13 +2,16 @@
 
 - hosts: all
   become: true
-  tasks:
+  pre_tasks:      #To są taski które są wykonywane przed
 
   - name: update repository index
     apt:
       update_cache: yes
       upgrade: dist
 
+- hosts: serwer1
+  become: true
+  tasks: 
 
   - name: install apache2 package
     apt:
@@ -24,3 +27,12 @@
 
 
 
+- hosts: serwer2
+  become: true
+  tasks:
+
+  - name: install db package
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
